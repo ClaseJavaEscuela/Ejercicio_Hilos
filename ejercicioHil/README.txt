@@ -1,6 +1,6 @@
 Reflexión sobre lo aprendido
 
-Los Ejercicio realizados me ayudron para lograr enteder como se crean y se manejan los hilos
+Los Ejercicio realizados me ayudaron a lograr enteder como se crean y se manejan los hilos
 me confundio un poco la diferencia entre extender Thread e implementar Runnable
 pero despues del ejercicio de comparacion y despues de leer algunos articulos sobre la diferencia
 logre entender que Runnable es mas flexible porque permite que la clase herede de otras clases si es necesario
