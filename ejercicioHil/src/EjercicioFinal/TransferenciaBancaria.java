@@ -1,19 +1,23 @@
 package EjercicioFinal;
-
+/*
+* LUIS ANGEL DIAZ DIAZ
+* */
 import java.util.Random;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+// Clase que representa una cuenta bancaria con saldo y un identificador
 class CuentaBancaria {
   private double saldo;
   private int id;
-  Lock lock = new ReentrantLock();
+  Lock lock = new ReentrantLock();// Lock para evitar problemas de concurrencia
 
   public CuentaBancaria(int id, int saldo) {
     this.saldo = saldo;
     this.id = id;
   }
 
+  // Métodos para obtener saldo e ID de la cuenta
   public double getSaldo() {
     return saldo;
   }
@@ -22,9 +26,11 @@ class CuentaBancaria {
     return id;
   }
 
+  // Metodo para retirar dinero de la cuenta
   public boolean retirar(double cantidad) {
     lock.lock();
     try {
+      // validamos que la cantidad no sea mayor al saldo
       if (cantidad > saldo) {
         System.out.println("No hay suficiente saldo en la cuenta " + id);
         return false;
@@ -36,10 +42,12 @@ class CuentaBancaria {
       lock.unlock();
     }
   }
-;
+
+  // Metodo para depositar dinero en la cuenta
   public boolean depositar(double cantidad) {
     lock.lock();
     try {
+      //Validamos que la cantidad no sea menor o igual a cero
       if(cantidad<=0){
         System.out.println("Cantidad no valida");
         return false;
@@ -52,9 +60,11 @@ class CuentaBancaria {
     }
   };
 
+  // Método para hacer una transferencia entre cuentas
   public void transferencia(double cantidad,CuentaBancaria cuentaDestino) {
     lock.lock();
     try {
+      // validamos las operaciones necesarias para la tranferencia
       if (!this.retirar(cantidad)) {
         System.out.println("Error en el deposito");
       }
@@ -72,6 +82,7 @@ class CuentaBancaria {
 
 public class TransferenciaBancaria {
   public static void main(String[] args) {
+    // Creamos un array de cuentas bancarias
     CuentaBancaria[] cuentas = {
         new CuentaBancaria(1, 1000),
         new CuentaBancaria(2, 2000),
@@ -79,20 +90,26 @@ public class TransferenciaBancaria {
         new CuentaBancaria(4,4000)
     };
     Random random = new Random();
-    int numeroHilos = cuentas.length -2;
+    int numeroHilos = cuentas.length -2;// Número de hilos que harán transferencias
+
     Thread[] hilos = new Thread[numeroHilos];
+
     for(int i=0;i<numeroHilos;i++){
       hilos[i] = new Thread(()-> {
+        // Cada hilo hace 3 transferencias
         for(int j=0;j<3;j++){
           int cuentaOrigen = random.nextInt(cuentas.length);
           int cuentaDestino = random.nextInt(cuentas.length);
+          // Aseguramos que la cuenta origen y destino sean diferentes
           while(cuentaOrigen==cuentaDestino){
             cuentaDestino = random.nextInt(cuentas.length);
           }
+          // Monto aleatorio para la transferencia
           double monto = 50 + random.nextInt(100);
           cuentas[cuentaOrigen].transferencia(monto,cuentas[cuentaDestino]);
 
           try{
+            //le damos un retraso para la transferencia
             Thread.sleep(100);
           }catch(InterruptedException e){
             e.printStackTrace();
@@ -103,6 +120,7 @@ public class TransferenciaBancaria {
       hilos[i].start();
     };
 
+    // Esperamos a que todos los hilos terminen
     for(Thread hilo:hilos){
       try{
         hilo.join();
@@ -110,6 +128,8 @@ public class TransferenciaBancaria {
         e.printStackTrace();
       }
     }
+
+    // Mostramos el saldo de todas las cuentas
     System.out.println("Saldo de las cuentas: ");
     for(CuentaBancaria cuenta:cuentas){
       System.out.println("Cuenta " + cuenta.getId() + ": " + cuenta.getSaldo());

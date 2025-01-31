@@ -12,7 +12,7 @@ class HiloExtendido extends  Thread {//Hilo que hereda de la clase Thread
     for(int i=0;i<5;i++){
       System.out.println("mensaje numero: "+(i+1));
       try {
-        Thread.sleep(1000);
+        Thread.sleep(500);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }

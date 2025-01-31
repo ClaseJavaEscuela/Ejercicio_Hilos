@@ -36,9 +36,9 @@ public class ErroresHilo {
     }catch (IllegalThreadStateException e){
       //si el hilo no puede iniciarse se muestra el mensaje
       hilo1.interrupt();
-      System.out.println("Error: "+e.getMessage());
+      e.printStackTrace();
     } catch (InterruptedException e) {
-      throw new RuntimeException(e);
+      e.printStackTrace();
     }
   }
 }

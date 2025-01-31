@@ -1,6 +1,10 @@
 package Ejercicio7;
+/*
+* LUIS ANGEL DIAZ DIAZ
+* */
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+// Clase que gestiona datos con control de concurrencia mediante Lock
 class DataAvanzada{
   private int[] data;
   Lock lock = new ReentrantLock();
@@ -9,6 +13,7 @@ class DataAvanzada{
     this.data = new int[maximaData];
   }
 
+  // Metodo para ingresar datos de manera segura con bloqueo explícito
   public void ingresarData(int dato, int indice){
     lock.lock();
     try{
@@ -21,16 +26,12 @@ class DataAvanzada{
     }
   }
 
+  // Metodo para extraer datos con sincronización
   public void sacarDatos(int indice){
     lock.lock();
     try{
       while(data.length == 0){
-        try{
-          System.out.println("Esperando datos");
-          wait();
-        }catch(InterruptedException e){
-          e.printStackTrace();
-        }
+        System.out.println("Esperando datos");
       }
 
       if(indice < data.length){
@@ -44,9 +45,11 @@ class DataAvanzada{
 
 }
 
+// Clase principal que maneja el flujo del programa
 public class SincronizacionAvanzada {
   private static int limiteData = 10;
 
+  // Hilo que simula un productor de datos
   public static void main(String[] args) {
     DataAvanzada data = new DataAvanzada(limiteData);
 
@@ -60,7 +63,7 @@ public class SincronizacionAvanzada {
         }
       }
     });
-
+    // Hilo que simula un consumidor de datos
     Thread consumidor = new Thread(() -> {
       for (int i = 0; i < limiteData; i++) {
         try {
@@ -72,10 +75,12 @@ public class SincronizacionAvanzada {
       }
     });
 
+    // Iniciar ambos hilos
     productor.start();
     consumidor.start();
 
     try {
+      //esperar a que ambos hilos terminen
       productor.join();
       consumidor.join();
     } catch (InterruptedException e) {
