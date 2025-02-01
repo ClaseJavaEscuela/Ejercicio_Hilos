@@ -13,7 +13,7 @@ class Data{
   }
 
   //Metodo sincronizado para agregar datos al array
-  public synchronized void ingresarData(int dato, int indice){
+  public synchronized void ingresarData(int dato, int indice) throws InterruptedException {
     if(indice < data.length ){
       System.out.println("El dato ingresado es: " + dato);
       this.data[indice] = dato;
@@ -31,10 +31,7 @@ class Data{
         e.printStackTrace();
       }
     }
-
-    if(indice < data.length){
-      System.out.println("Sacando el dato: " + data[indice]);
-    }
+    System.out.println("El dato sacado es: " + data[indice]);
 
   }
 
@@ -50,7 +47,7 @@ public class ProductoConsumidor {
       for (int i = 0; i < limiteData; i++) {
         try {
           data.ingresarData(i+1, i);
-          Thread.sleep(1000);
+          Thread.sleep(900);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
@@ -61,7 +58,7 @@ public class ProductoConsumidor {
       for (int i = 0; i < limiteData; i++) {
         try {
           data.sacarDatos(i);
-          Thread.sleep(1000);
+          Thread.sleep(950);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }

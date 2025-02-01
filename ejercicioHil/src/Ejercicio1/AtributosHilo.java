@@ -22,7 +22,7 @@ class AtributosHilo extends Thread {
 class EjemploAtributosHilo {
     public static void main(String[] args) {
       AtributosHilo hilo = new AtributosHilo("Hilo 1");//creamos un hilo y le asignamos un nombre
-      hilo.setName("Hilo 2");//le asignamos un nombre
+      hilo.setName("Hilo 73");//le asignamos un nombre
       hilo.setPriority(Thread.MAX_PRIORITY);//le asignamos un nivel de prioridad
       hilo.start();// iniciamos el hilo
 

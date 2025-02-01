@@ -57,7 +57,7 @@ public class SincronizacionAvanzada {
       for (int i = 0; i < limiteData; i++) {
         try {
           data.ingresarData(i+1, i);
-          Thread.sleep(1000);
+          Thread.sleep(900);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
@@ -68,7 +68,7 @@ public class SincronizacionAvanzada {
       for (int i = 0; i < limiteData; i++) {
         try {
           data.sacarDatos(i);
-          Thread.sleep(1000);
+          Thread.sleep(950);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
